@@ -62,24 +62,7 @@ public class Resources {
 		return "<p>Your IP: " + yourIP+"<p>";
 	}
 
-	@GET
-	@Path("JSONTest")
-	@Produces(MediaType.APPLICATION_JSON)
-	// try with TEXT_HTML. See if still works.
-	public String returnJSON() throws JsonGenerationException,
-			JsonMappingException, IOException {
-
-		SmartHouse instance = new SmartHouse();
-		String jsonString = null;
-		// Alarms instance = new Alarms();
-
-		// this lets us try modify the address
-		// instance.setAddress("321 Real St, Realville");
-		ObjectMapper mapper = new ObjectMapper();// thing that makes json
-
-		jsonString = mapper.writeValueAsString(instance);
-		return jsonString;
-	}
+	
 
 	// Write like this
 	// http://localhost:8080/com.smarthouse.rest/api/services/iliketuna@fishlovers.com/houses
@@ -106,6 +89,7 @@ public class Resources {
 
 		String output = " This is your email: " + email + " This is your id: "+id;
 		System.out.println("Client requesting house "+id+" device information");
+		//fireAlarm
 
 		// Just testing another way to return a response
 		return Response.status(200).entity(output).build();
@@ -118,11 +102,11 @@ public class Resources {
 	@Produces(MediaType.TEXT_HTML)
 	// can also do TEXT_PLAIN
 	public String login(
-			@DefaultValue("default username") @QueryParam("username") String username,
+			@DefaultValue("default username") @QueryParam("username") String login,
 			@DefaultValue("default password") @QueryParam("password") String password) {
-		System.out.println("Username = " + username + " Password: " + password);
-		String name = username;
-		return "<p>WELCOME  " + name + "</p><p>  your password is  " + password
+		System.out.println("Username = " + login + " Password: " + password);
+		String SSN = login;
+		return "<p>authenticate_  " + SSN + "_" + password+"_"
 				+ "</p>";
 
 	}
@@ -139,8 +123,8 @@ public class Resources {
 	
 	@GET
 	@Path("toggle")
-	@Produces(MediaType.APPLICATION_JSON)
-	public String TestJSONToggle() {
+	@Produces(MediaType.TEXT_HTML)
+	public String TestJSONToggle(@QueryParam("device") String device,@QueryParam("state") String state) {
 		
 		House instance = new House();
 		String jsonString = null;
@@ -159,11 +143,66 @@ public class Resources {
 			e.printStackTrace();
 		}
 		
+		int id = 0;
+		if(device.equals("fireAlarm"))
+				id = 1;
+		else if(device.equals("stove"))
+				id = 2;
+		else if(device.equals("waterLeakage"))
+			id = 3;
+		else if(device.equals("windowOpen"))
+			id = 4;
+		else if(device.equals("doorOpen"))
+			id = 5;
+		else if(device.equals("ElectricityCut"))
+			id = 6;
+		else if(device.equals("lightInside"))
+			id = 7;
+		else if(device.equals("AutoLightInside"))
+			id = 8;
+		else if(device.equals("lightOutside"))
+			id = 9;
+		else if(device.equals("autoLightOutside"))
+			id = 10;
+		else if(device.equals("heaterInside"))
+			id = 11;
+		else if(device.equals("heaterRoof"))
+			id = 12;
+		else if(device.equals("fan"))
+			id = 13;
+		else if(device.equals("autoAirConditioning"))
+			id = 14;
+		else if(device.equals("temperatureOutside"))
+			id = 15;
+		else if(device.equals("temperatureInside"))
+			id = 16;
+		else if(device.equals("temperatureInsideRoof"))
+			id = 17;
+		else if(device.equals("electricityConsumption"))
+			id = 18;
+		else if(device.equals("securityAlarm"))
+			id = 19;
+		
+		
+		
+		
+		
+		
+		
+		
+	
+		
+		
+		
+		
+		
+		return "<p>toggleDevice_ " +id + "_"+state+"_</p>";
+		
 //		instance.setAddress("321 Real St, Realville");
 //		instance.setAddress("321 Real St, Realville");
 //		instance.setAddress("321 Real St, Realville");
 		//jsonString = "Cat";
-		return jsonString;
+		
 
 	}
 
